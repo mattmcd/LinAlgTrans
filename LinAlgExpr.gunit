@@ -1,0 +1,16 @@
+gunit LinAlgExpr;
+
+outArgs:
+  "a = " OK
+  "[a,b] = "  OK
+  "a,b = " FAIL
+
+matrix:
+  "a" OK
+  "[a b]" OK
+  "[a, b]" OK
+  "[a, b]" OK
+  "[a, b, c]" OK
+  "[a; b]" OK
+  "[a, [b, c]]" OK
+  "[a, [b, [ c; d; e]]]" OK

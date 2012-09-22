@@ -1,0 +1,13 @@
+group Python;
+
+matrix( el ) ::=<<
+matrix([<el; separator=", ">])
+>>
+
+horzcat( el ) ::=<<
+[<el; separator=", ">]
+>>
+
+vertcat( el ) ::=<<
+[[<el; separator=", ">]]
+>>
