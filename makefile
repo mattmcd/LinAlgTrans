@@ -20,6 +20,9 @@ deploy: wrappergen.jar PythonWrapper.stg MEXWrapper.stg
 test:
 	java -cp $$CLASSPATH:classes org.antlr.gunit.Interp LinAlgExpr.gunit
 
+testline:
+	java -cp $$CLASSPATH:classes Main
+
 test01:
 	java -cp $$CLASSPATH:classes Main test01.txt
 
@@ -31,6 +34,9 @@ test02mex:
 
 test03: 
 	java -cp $$CLASSPATH:classes Main test03.txt
+
+test04: 
+	java -cp $$CLASSPATH:classes Main test04.txt
 
 appdir:
 	mkdir -p WrapperGen

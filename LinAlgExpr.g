@@ -3,6 +3,7 @@ grammar LinAlgExpr;
 options {
   output = AST;
   ASTLabelType = CommonTree;
+  backtrack = true;
 }
 
 tokens {
@@ -35,15 +36,16 @@ inArgs	  :	'(' idList? ')' -> ^(INARGS idList? )
 
 body      : stat+;
 
-stat      : matrix;
+stat      : vmatrix -> ^(MATRIX vmatrix)
+          | ID
+          ;
 
-matrix    : ID -> ^(MATRIX ID)
-          | '[' matrix (catOp matrix)+ ']' -> ^(catOp matrix+ )
+vmatrix   : '[' hmatrix? (';' hmatrix)* ']' -> ^(VERTCAT hmatrix*)
+          ;
+
+hmatrix   : stat (','? stat)*  -> ^(HORZCAT stat+ )
           ;
           
-catOp     : ','? -> HORZCAT
-          | ';'  -> VERTCAT
-          ;
 /*          
 catExpr   : (','? matrix )+ -> ^(HORZ matrix+ )
           | (';' matrix )+  -> ^(VERT matrix+ )

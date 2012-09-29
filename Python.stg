@@ -1,7 +1,7 @@
 group Python;
 
 matrix( el ) ::=<<
-matrix([<el; separator=", ">])
+matrix( <el> )
 >>
 
 horzcat( el ) ::=<<
@@ -9,5 +9,5 @@ horzcat( el ) ::=<<
 >>
 
 vertcat( el ) ::=<<
-[[<el; separator=", ">]]
+[<el; separator=", ">]
 >>
