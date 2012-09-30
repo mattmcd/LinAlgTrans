@@ -1,5 +1,13 @@
 group Python;
 
+assign( var, expr ) ::=<<
+<var> = <expr>;
+>>
+
+outArgs( args ) ::=<<
+<args; separator=", ">
+>>
+
 matrix( el ) ::=<<
 matrix( <el> )
 >>
@@ -10,4 +18,8 @@ horzcat( el ) ::=<<
 
 vertcat( el ) ::=<<
 [<el; separator=", ">]
+>>
+
+solve( A, b ) ::=<<
+linalg.solve( <A>, <b>)
 >>

@@ -41,7 +41,7 @@ public class LinAlg {
     ExprGen walker = new ExprGen( nodes );
     walker.setTemplateLib( templates );
     // ExprGen.function_return ret = walker.function();
-    ExprGen.expr_return ret = walker.expr();
+    ExprGen.stat_return ret = walker.stat();
     return ret.getTemplate().toString();
   }
 }

@@ -16,3 +16,5 @@ stat :
   "[a, [b, c]]" OK
   "[a, [b, [ c; d; e]]]" OK
   "[a, b, c; d, e, f]" OK
+  "x = A\b" OK
+  "[a,b] = [c,d]" OK

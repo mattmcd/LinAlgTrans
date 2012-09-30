@@ -13,22 +13,18 @@ tokens {
   NAME;
   HORZCAT;
   VERTCAT;
-  /*
-  CAT;
-  HORZ;
-  VERT;
-  */
   MATRIX;
+  ASSIGN;
 }
 
 file	    :	function+ EOF;
 
-function	:	'function' outArgs ID inArgs body 'end'?
+function	:	'function' outArgs? ID inArgs body 'end'?
             -> ^(FUNCTION ^(NAME ID) inArgs outArgs body );
 	
-outArgs	  :	ID '=' 	-> ^(OUTARGS ID)
-	        |	'[' idList ']' '=' 	-> ^(OUTARGS idList)
-	        |		-> OUTARGS;
+outArgs	  :	ID 	-> ^(OUTARGS ID)
+	        |	'[' idList ']' 	-> ^(OUTARGS idList)
+	        ;
 	
 
 inArgs	  :	'(' idList? ')' -> ^(INARGS idList? )
@@ -36,14 +32,21 @@ inArgs	  :	'(' idList? ')' -> ^(INARGS idList? )
 
 body      : stat+;
 
-stat      : vmatrix -> ^(MATRIX vmatrix)
+stat      : outArgs '=' expr -> ^(ASSIGN outArgs expr)
+          | expr;
+
+expr      : e0;
+e0        : e1;
+e1        : base_expr (RDIVIDE^ base_expr)*;
+
+base_expr : vmatrix -> ^(MATRIX vmatrix)
           | ID
           ;
 
 vmatrix   : '[' hmatrix? (';' hmatrix)* ']' -> ^(VERTCAT hmatrix*)
           ;
 
-hmatrix   : stat (','? stat)*  -> ^(HORZCAT stat+ )
+hmatrix   : expr (','? expr)*  -> ^(HORZCAT expr+ )
           ;
           
 /*          
@@ -52,6 +55,8 @@ catExpr   : (','? matrix )+ -> ^(HORZ matrix+ )
           ;
 */
 idList	:	ID (',' ID)* -> ID+;
+
+RDIVIDE : '\\';
 
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
