@@ -16,6 +16,14 @@ matrix( el ) ::=<<
 matrix( <el> )
 >>
 
+call( name, args ) ::=<<
+<name><args>
+>>
+
+callArgs( args ) ::=<<
+(<args; separator=", ">)
+>>
+
 horzcat( el ) ::=<<
 [<el; separator=", ">]
 >>

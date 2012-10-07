@@ -15,20 +15,26 @@ tokens {
   VERTCAT;
   MATRIX;
   ASSIGN;
+  CALL;
+  CALLARGS;
 }
 
 file	    :	function+ EOF;
 
-function	:	'function' outArgs? ID inArgs body 'end'?
+function	:	'function' outArgs? ID inArgs? body 'end'?
             -> ^(FUNCTION ^(NAME ID) inArgs outArgs body );
 	
 outArgs	  :	ID 	-> ^(OUTARGS ID)
 	        |	'[' idList ']' 	-> ^(OUTARGS idList)
 	        ;
 	
-
+// Function definition argument list
 inArgs	  :	'(' idList? ')' -> ^(INARGS idList? )
-	        |	 	-> INARGS ;	
+	        ;
+
+// Function call argument list
+callArgs  : '(' exprList? ')' -> ^(CALLARGS exprList? )
+          ;
 
 body      : stat+;
 
@@ -41,6 +47,7 @@ e1        : base_expr (RDIVIDE^ base_expr)*;
 
 base_expr : vmatrix -> ^(MATRIX vmatrix)
           | ID
+          | ID callArgs -> ^(CALL ID callArgs)
           | NUMBER
           ;
 
@@ -56,6 +63,8 @@ catExpr   : (','? matrix )+ -> ^(HORZ matrix+ )
           ;
 */
 idList	:	ID (',' ID)* -> ID+;
+
+exprList: expr (',' expr)* -> expr+;
 
 RDIVIDE : '\\';
 
