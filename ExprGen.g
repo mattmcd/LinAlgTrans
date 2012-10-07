@@ -25,7 +25,11 @@ expr      : ^(RDIVIDE A=base_expr b=base_expr )
 base_expr : ^(MATRIX e=vmatrix ) -> matrix( el = { $e.st } )
           | ID -> { %{$ID.text} }
           | NUMBER -> { %{$NUMBER.text}}
-          | libCall
+          | funCall -> { $funCall.st }
+          ;
+
+
+funCall   : libCall -> { $libCall.st }
           | ^(CALL ID callArgs ) -> 
               call( name={$ID.text}, args = { $callArgs.st } )
           ;
@@ -36,8 +40,11 @@ vmatrix   : ^(VERTCAT n+=hmatrix+ ) -> vertcat( el = {$n} )
 hmatrix   : ^(HORZCAT m+=expr+ ) -> horzcat( el = {$m} )
           ;
 
-libCall   : ^(CALL 'svd' expr )
-          ; 
+libCall   : ^(SVD callArgs ) -> svd( args = {$callArgs.st} )
+          | ^(EIG callArgs ) -> eig( args = {$callArgs.st} ) 
+          | ^(RAND callArgs ) -> rand( args = {$callArgs.st} ) 
+          | ^(RANDN callArgs ) -> randn( args = {$callArgs.st} ) 
+          ;
 
-callArgs  : ^(CALLARGS e+=expr+ ) -> callArgs( args = {$e} )
+callArgs  : ^(CALLARGS e+=expr* ) -> callArgs( args = {$e} )
           ;

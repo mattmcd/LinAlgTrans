@@ -24,6 +24,22 @@ callArgs( args ) ::=<<
 (<args; separator=", ">)
 >>
 
+svd( args ) ::=<<
+linalg.svd<args>
+>>
+
+eig( args ) ::=<<
+linalg.eig<args>
+>>
+
+rand( args ) ::=<<
+random.rand<args>
+>>
+
+randn( args ) ::=<<
+random.randn<args>
+>>
+
 horzcat( el ) ::=<<
 [<el; separator=", ">]
 >>

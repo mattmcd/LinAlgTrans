@@ -17,6 +17,11 @@ tokens {
   ASSIGN;
   CALL;
   CALLARGS;
+  // Library functions
+  SVD;
+  EIG;
+  RAND;
+  RANDN;
 }
 
 file	    :	function+ EOF;
@@ -36,17 +41,21 @@ inArgs	  :	'(' idList? ')' -> ^(INARGS idList? )
 callArgs  : '(' exprList? ')' -> ^(CALLARGS exprList? )
           ;
 
+// Matrix constructor argument - single arg creates square matrix
+ctorArgs  : expr (',' expr)+ -> ^(CALLARGS expr+ )
+          | expr -> ^(CALLARGS expr expr )
+          ;
+
 body      : stat+;
 
 stat      : outArgs '=' expr -> ^(ASSIGN outArgs expr)
           | expr;
 
-expr      : e0;
-e0        : e1;
-e1        : base_expr (RDIVIDE^ base_expr)*;
+expr      : base_expr (RDIVIDE^ base_expr)*;
 
 base_expr : vmatrix -> ^(MATRIX vmatrix)
           | ID
+          | libCall
           | ID callArgs -> ^(CALL ID callArgs)
           | NUMBER
           ;
@@ -57,6 +66,12 @@ vmatrix   : '[' hmatrix? (';' hmatrix)* ']' -> ^(VERTCAT hmatrix*)
 hmatrix   : expr (','? expr)*  -> ^(HORZCAT expr+ )
           ;
           
+libCall   : 'svd' callArgs -> ^(SVD callArgs)
+          | 'eig' callArgs -> ^(EIG callArgs)
+          | 'rand' '(' ctorArgs ')' -> ^(RAND ctorArgs)
+          | 'randn' '(' ctorArgs ')' -> ^(RANDN ctorArgs)
+          ;
+
 /*          
 catExpr   : (','? matrix )+ -> ^(HORZ matrix+ )
           | (';' matrix )+  -> ^(VERT matrix+ )
