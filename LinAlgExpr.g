@@ -41,6 +41,7 @@ e1        : base_expr (RDIVIDE^ base_expr)*;
 
 base_expr : vmatrix -> ^(MATRIX vmatrix)
           | ID
+          | NUMBER
           ;
 
 vmatrix   : '[' hmatrix? (';' hmatrix)* ']' -> ^(VERTCAT hmatrix*)
@@ -61,9 +62,13 @@ RDIVIDE : '\\';
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
+NUMBER : FLOAT | INT;
+
+fragment
 INT :	'0'..'9'+
     ;
 
+fragment
 FLOAT
     :   ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
     |   '.' ('0'..'9')+ EXPONENT?

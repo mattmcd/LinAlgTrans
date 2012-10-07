@@ -1,5 +1,9 @@
 group Python;
 
+body( stat ) ::=<<
+<stat; separator="\n">
+>>
+
 assign( var, expr ) ::=<<
 <var> = <expr>;
 >>
