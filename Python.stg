@@ -16,6 +16,22 @@ matrix( el ) ::=<<
 matrix( <el> )
 >>
 
+add( a, b) ::=<<
+<a> + <b>
+>>
+
+sub( a, b) ::=<<
+<a> - <b>
+>>
+
+elmul( a, b) ::=<<
+array(<a>) * array(<b>)
+>>
+
+eldiv( a, b) ::=<<
+array(<a>)/array(<b>)
+>>
+
 call( name, args ) ::=<<
 <name><args>
 >>

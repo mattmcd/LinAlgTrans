@@ -17,9 +17,19 @@ stat      : ^(ASSIGN a=outArgs e=expr)
 outArgs   : ^(OUTARGS a+=ID* ) -> outArgs( args = {$a} )
           ;
 
-expr      : ^(RDIVIDE A=base_expr b=base_expr ) 
-              -> solve( A={$A.st}, b={$b.st})
-          | e=base_expr -> {$e.st}
+expr      : ^('+' a=mulExpr b=mulExpr) -> add( a={$a.st}, b={$b.st} )
+          | ^('-' a=mulExpr b=mulExpr) -> sub( a={$a.st}, b={$b.st} )
+          | mulExpr -> { $mulExpr.st }
+          ;
+
+mulExpr   : ^(RDIVIDE A=grpExpr b=grpExpr ) -> solve( A={$A.st}, b={$b.st})
+          | ^('.*' a=grpExpr b=grpExpr ) -> elmul( a={$a.st}, b={$b.st})
+          | ^('./' a=grpExpr b=grpExpr ) -> eldiv( a={$a.st}, b={$b.st})
+          | grpExpr -> { $grpExpr.st }
+          ;
+
+grpExpr   : base_expr -> { $base_expr.st }
+          | ^(PARENS expr) -> { $expr.st }
           ;
 
 base_expr : ^(MATRIX e=vmatrix ) -> matrix( el = { $e.st } )

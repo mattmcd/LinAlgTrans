@@ -17,6 +17,7 @@ tokens {
   ASSIGN;
   CALL;
   CALLARGS;
+  PARENS;
   // Library functions
   SVD;
   EIG;
@@ -51,12 +52,20 @@ body      : stat+;
 stat      : outArgs '=' expr -> ^(ASSIGN outArgs expr)
           | expr;
 
-expr      : base_expr (RDIVIDE^ base_expr)*;
+expr      : mulExpr (('+'^|'-'^) mulExpr )*
+          ;
+
+mulExpr   : groupExpr (('.*'^|'./'^|RDIVIDE^) groupExpr)*
+          ;
+
+groupExpr : base_expr^
+          | '(' expr ')' -> ^(PARENS expr) 
+          ;
 
 base_expr : vmatrix -> ^(MATRIX vmatrix)
-          | ID
-          | libCall
           | ID callArgs -> ^(CALL ID callArgs)
+          | libCall
+          | ID
           | NUMBER
           ;
 
