@@ -33,11 +33,14 @@ grpExpr   : base_expr -> { $base_expr.st }
           ;
 
 base_expr : ^(MATRIX e=vmatrix ) -> matrix( el = { $e.st } )
-          | ID -> { %{$ID.text} }
-          | NUMBER -> { %{$NUMBER.text}}
           | funCall -> { $funCall.st }
+          |^(UMINUS id_expr) -> uminus( x = { $id_expr.st } )
+          | id_expr -> { $id_expr.st }
           ;
 
+id_expr   : ID -> { %{$ID.text} }
+          | NUMBER -> { %{$NUMBER.text}}
+          ;
 
 funCall   : libCall -> { $libCall.st }
           | ^(CALL ID callArgs ) -> 

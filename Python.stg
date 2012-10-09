@@ -16,20 +16,24 @@ matrix( el ) ::=<<
 matrix( <el> )
 >>
 
+uminus( x )::=<<
+-<x>
+>>
+
 add( a, b) ::=<<
-<a> + <b>
+(<a> + <b>)
 >>
 
 sub( a, b) ::=<<
-<a> - <b>
+(<a> - <b>)
 >>
 
 elmul( a, b) ::=<<
-array(<a>) * array(<b>)
+(array(<a>) * array(<b>))
 >>
 
 eldiv( a, b) ::=<<
-array(<a>)/array(<b>)
+(array(<a>)/array(<b>))
 >>
 
 call( name, args ) ::=<<

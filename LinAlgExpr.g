@@ -18,6 +18,7 @@ tokens {
   CALL;
   CALLARGS;
   PARENS;
+  UMINUS;
   // Library functions
   SVD;
   EIG;
@@ -65,7 +66,11 @@ groupExpr : base_expr^
 base_expr : vmatrix -> ^(MATRIX vmatrix)
           | ID callArgs -> ^(CALL ID callArgs)
           | libCall
-          | ID
+          | '-' id_expr -> ^(UMINUS id_expr)
+          | id_expr
+          ;
+
+id_expr   : ID 
           | NUMBER
           ;
 
