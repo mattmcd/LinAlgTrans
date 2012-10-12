@@ -36,6 +36,14 @@ eldiv( a, b) ::=<<
 (array(<a>)/array(<b>))
 >>
 
+matmul( a, b) ::=<<
+(matrix(<a>) * matrix(<b>))
+>>
+
+matdiv( a, b) ::=<<
+(matrix(<a>)/matrix(<b>))
+>>
+
 call( name, args ) ::=<<
 <name><args>
 >>

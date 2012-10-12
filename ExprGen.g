@@ -25,6 +25,8 @@ expr      : ^('+' a=mulExpr b=mulExpr) -> add( a={$a.st}, b={$b.st} )
 mulExpr   : ^(RDIVIDE A=grpExpr b=grpExpr ) -> solve( A={$A.st}, b={$b.st})
           | ^('.*' a=grpExpr b=grpExpr ) -> elmul( a={$a.st}, b={$b.st})
           | ^('./' a=grpExpr b=grpExpr ) -> eldiv( a={$a.st}, b={$b.st})
+          | ^('/' a=grpExpr b=grpExpr ) -> matdiv( a={$a.st}, b={$b.st})
+          | ^('*' a=grpExpr b=grpExpr ) -> matmul( a={$a.st}, b={$b.st})
           | grpExpr -> { $grpExpr.st }
           ;
 

@@ -56,7 +56,7 @@ stat      : outArgs '=' expr -> ^(ASSIGN outArgs expr)
 expr      : mulExpr (('+'^|'-'^) mulExpr )*
           ;
 
-mulExpr   : groupExpr (('.*'^|'./'^|RDIVIDE^) groupExpr)*
+mulExpr   : groupExpr (('*'^|'/'^|'.*'^|'./'^|RDIVIDE^) groupExpr)*
           ;
 
 groupExpr : base_expr^
