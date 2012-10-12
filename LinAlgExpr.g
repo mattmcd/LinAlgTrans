@@ -56,7 +56,10 @@ stat      : outArgs '=' expr -> ^(ASSIGN outArgs expr)
 expr      : mulExpr (('+'^|'-'^) mulExpr )*
           ;
 
-mulExpr   : groupExpr (('*'^|'/'^|'.*'^|'./'^|RDIVIDE^) groupExpr)*
+mulExpr   : powExpr (('*'^|'/'^|'.*'^|'./'^|RDIVIDE^) powExpr)*
+          ;
+
+powExpr   : groupExpr (('^'^|'.^'^) groupExpr)*
           ;
 
 groupExpr : base_expr^
@@ -101,18 +104,24 @@ RDIVIDE : '\\';
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
-NUMBER : FLOAT | INT;
+NUMBER 
+    : INT FLOAT_SUFFIX? 
+    ;
 
 fragment
 INT :	'0'..'9'+
     ;
 
 fragment
-FLOAT
-    :   ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
-    |   '.' ('0'..'9')+ EXPONENT?
-    |   ('0'..'9')+ EXPONENT
+
+FLOAT_SUFFIX
+    :   '.' ('0'..'9')+ EXPONENT?
+    |    EXPONENT
     ;
+
+// FLOAT
+//    :   '.' ('0'..'9')+ EXPONENT?
+//    ;
 
 WS  :   ( ' '
         | '\t'

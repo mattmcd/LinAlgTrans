@@ -22,11 +22,16 @@ expr      : ^('+' a=mulExpr b=mulExpr) -> add( a={$a.st}, b={$b.st} )
           | mulExpr -> { $mulExpr.st }
           ;
 
-mulExpr   : ^(RDIVIDE A=grpExpr b=grpExpr ) -> solve( A={$A.st}, b={$b.st})
-          | ^('.*' a=grpExpr b=grpExpr ) -> elmul( a={$a.st}, b={$b.st})
-          | ^('./' a=grpExpr b=grpExpr ) -> eldiv( a={$a.st}, b={$b.st})
-          | ^('/' a=grpExpr b=grpExpr ) -> matdiv( a={$a.st}, b={$b.st})
-          | ^('*' a=grpExpr b=grpExpr ) -> matmul( a={$a.st}, b={$b.st})
+mulExpr   : ^(RDIVIDE A=powExpr b=powExpr ) -> solve( A={$A.st}, b={$b.st})
+          | ^('.*' a=powExpr b=powExpr ) -> elmul( a={$a.st}, b={$b.st})
+          | ^('./' a=powExpr b=powExpr ) -> eldiv( a={$a.st}, b={$b.st})
+          | ^('/' a=powExpr b=powExpr ) -> matdiv( a={$a.st}, b={$b.st})
+          | ^('*' a=powExpr b=powExpr ) -> matmul( a={$a.st}, b={$b.st})
+          | powExpr -> { $powExpr.st }
+          ;
+
+powExpr   : ^('.^' a=grpExpr b=grpExpr ) -> elpow( a={$a.st}, b={$b.st})
+          | ^('^' a=grpExpr b=grpExpr ) -> matpow( a={$a.st}, b={$b.st})
           | grpExpr -> { $grpExpr.st }
           ;
 

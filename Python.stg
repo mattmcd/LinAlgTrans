@@ -13,7 +13,7 @@ outArgs( args ) ::=<<
 >>
 
 matrix( el ) ::=<<
-matrix( <el> )
+mat( <el> )
 >>
 
 uminus( x )::=<<
@@ -29,19 +29,27 @@ sub( a, b) ::=<<
 >>
 
 elmul( a, b) ::=<<
-(array(<a>) * array(<b>))
+mat(asarray(<a>) * asarray(<b>))
 >>
 
 eldiv( a, b) ::=<<
-(array(<a>)/array(<b>))
+mat(asarray(<a>)/asarray(<b>))
 >>
 
 matmul( a, b) ::=<<
-(matrix(<a>) * matrix(<b>))
+(mat(<a>) * mat(<b>))
 >>
 
 matdiv( a, b) ::=<<
-(matrix(<a>)/matrix(<b>))
+(<a>/<b>)
+>>
+
+elpow( a, b) ::=<<
+power(<a>, <b>)
+>>
+
+matpow( a, b) ::=<<
+(mat(<a>)^mat(<b>))
 >>
 
 call( name, args ) ::=<<
