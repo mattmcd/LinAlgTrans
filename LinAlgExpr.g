@@ -11,6 +11,7 @@ tokens {
   OUTARGS;
   INARGS;
   NAME;
+  BODY;
   HORZCAT;
   VERTCAT;
   MATRIX;
@@ -28,11 +29,11 @@ tokens {
 
 file	    :	function+ EOF;
 
-function	:	'function' outArgs? ID inArgs? body 'end'?
-            -> ^(FUNCTION ^(NAME ID) inArgs outArgs body );
+function	:	'function' outArgs? ID inArgs? body  'end'?
+            -> ^(FUNCTION ^(NAME ID) inArgs outArgs ^(BODY body) );
 	
-outArgs	  :	ID 	-> ^(OUTARGS ID)
-	        |	'[' idList ']' 	-> ^(OUTARGS idList)
+outArgs	  :	ID 	'=' -> ^(OUTARGS ID)
+	        |	'[' idList ']' '=' 	-> ^(OUTARGS idList)
 	        ;
 	
 // Function definition argument list

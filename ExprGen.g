@@ -6,12 +6,22 @@ options {
   output = template;
 }
 
+function  : ^(FUNCTION ^(NAME id_expr) inArgs outArgs ^(BODY body)) 
+              -> function( name={$id_expr.st}, 
+                           inArgs = {$inArgs.st},
+                           outArgs = {$outArgs.st}, 
+                           body = {$body.st} )
+          ;
+
 body      : s+=stat+ -> body( stat =  { $s } )
           ;
 
 stat      : ^(ASSIGN a=outArgs e=expr) 
               -> assign( var={$a.st}, expr = {$e.st})
           | e=expr -> { $e.st }
+          ;
+
+inArgs	  :	^(INARGS a+=ID* ) -> outArgs( args = {$a} )
           ;
 
 outArgs   : ^(OUTARGS a+=ID* ) -> outArgs( args = {$a} )

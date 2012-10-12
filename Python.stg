@@ -1,5 +1,11 @@
 group Python;
 
+function( name, inArgs, outArgs, body ) ::=<<
+def <name>(<inArgs>):
+  <body>
+  return (<outArgs>)
+>>
+
 body( stat ) ::=<<
 <stat; separator="\n">
 >>
