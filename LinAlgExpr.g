@@ -84,6 +84,7 @@ libCall   : 'svd' callArgs -> ^(SVD callArgs)
           | 'eig' callArgs -> ^(EIG callArgs)
           | 'rand' '(' ctorArgs ')' -> ^(RAND ctorArgs)
           | 'randn' '(' ctorArgs ')' -> ^(RANDN ctorArgs)
+          | 'dot' '(' a=expr ',' b=expr ')' -> ^('*' $a $b)
           ;
 
 /*          
