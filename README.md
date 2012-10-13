@@ -33,13 +33,23 @@ Example
 
 Input
 -----
-
     function fitParams = fitLine( xData, yData )
-
-    designMat = [ xData, ones(size(xData))]
+    designMat = [ xData, ones(size(xData)) ]
     fitParams = designMat\yData
-
-
+    end
+    
+    x = [0; 1; 2; 3]
+    y = [-1; 0.2; 0.9; 2.1]
+    fitLine( x, y )
+    
 Output
 ------
+    def fitLine(xData, yData):
+      designMat = vstack([hstack([xData, ones(shape( xData ))])]);
+      fitParams = linalg.lstsq( designMat, yData)[0];
+      return (fitParams)
 
+    x = vstack([hstack([0]), hstack([1]), hstack([2]), hstack([3])]);
+    y = vstack([hstack([-1]), hstack([0.2]), hstack([0.9]),
+    hstack([2.1])]);
+    fitLine(x, y)
