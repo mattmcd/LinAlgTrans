@@ -50,6 +50,5 @@ Output
       return (fitParams)
 
     x = vstack([hstack([0]), hstack([1]), hstack([2]), hstack([3])]);
-    y = vstack([hstack([-1]), hstack([0.2]), hstack([0.9]),
-    hstack([2.1])]);
+    y = vstack([hstack([-1]), hstack([0.2]), hstack([0.9]), hstack([2.1])]);
     fitLine(x, y)
