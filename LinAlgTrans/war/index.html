@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+  <title>Wrapper Generator</title>
+</HEAD>
+<BODY>
+<p>Translator for a Linear Algebra
+<a href="http://en.wikipedia.org/wiki/Domain-specific_language">DSL</a> to
+a 
+number of output formats. </p>
+
+<p>This project uses 
+<a href="http://www.antlr.org">ANTLR</a> and
+<a href="http://www.stringtemplate.org">StringTemplate</a> to parse the
+input 
+and produce the output target language.</p>
+
+<p>The Linear Algebra DSL is similar to the matrix manipulation 
+subset of the <a href="http://www.mathworks.com">MATLAB&reg;</a> language.
+</p>
+<p>See
+<a
+href="http://www.mathworks.de/matlabcentral/fileexchange/32769-mparser">mparser</a>
+by <a href="http://www.mit.edu/%7Ewingated/resources.html">David
+Wingate</a> for a more
+complete MATLAB grammar.  </p>
+
+  <form action="/Translate" method="post">
+    <div>
+        <textarea name="input" cols="75" rows="25">
+            function fitParams = fitLine( xData, yData )
+            designMat = [ xData, ones(size(xData)) ]
+            fitParams = designMat\yData
+            end
+
+            x = [0; 1; 2; 3]
+            y = [-1; 0.2; 0.9; 2.1]
+            fitLine( x, y )
+        </textarea>
+    </div>
+    <div><input type="radio" name="generate" value="" checked/>Python</div>
+    <div><input type="submit" value="Translate"/></div>
+  </form>
+  <p>
+
+  <p>
+    Example direct use: 
+    <pre>
+      curl http://linalgtrans.appspot.com/Translate -d input="A=rand(10) b=rand(10,1) x=A\b"
+    </pre>
+  </p>
+  <p>
+    Contact: Tweet <a href="http://twitter.com/mattmcd">mattmcd</a> or fork
+    on <a href="http://github.com/mattmcd/LinAlgTrans">GitHub</a>.
+  </p>
+</BODY>
+</HTML>
