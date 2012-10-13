@@ -11,7 +11,7 @@ This project uses
 and produce the output target language.
 
 The Linear Algebra DSL is similar to the matrix manipulation 
-subset of the MATLAB(R) language.  See
+subset of the MATLAB&reg; language.  See
 [mparser](http://www.mathworks.de/matlabcentral/fileexchange/32769-mparser)
 by [David Wingate](http://www.mit.edu/~wingated/resources.html) for a more
 complete MATLAB grammar.  
