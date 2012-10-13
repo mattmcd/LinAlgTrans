@@ -9,13 +9,12 @@ run:
 	java -cp $$CLASSPATH:classes Main test2.txt
 
 jar:
-	jar cfm wrappergen.jar manifest.txt -C classes .
+	jar cfm linalgtrans.jar manifest.txt -C classes .
 
-deploy: wrappergen.jar PythonWrapper.stg MEXWrapper.stg
-	cp wrappergen.jar WrapperGen/war/WEB-INF/lib
-	cp antlrworks-1.4.3.jar WrapperGen/war/WEB-INF/lib
-	cp PythonWrapper.stg WrapperGen/war/WEB-INF
-	cp MEXWrapper.stg WrapperGen/war/WEB-INF
+deploy: linalgtrans.jar Python.stg
+	cp linalgtrans.jar LinAlgTrans/war/WEB-INF/lib
+	cp antlrworks-1.4.3.jar LinAlgTrans/war/WEB-INF/lib
+	cp Python.stg LinAlgTrans/war/WEB-INF
 
 test:
 	java -cp $$CLASSPATH:classes org.antlr.gunit.Interp LinAlgExpr.gunit
