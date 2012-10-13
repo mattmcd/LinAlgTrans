@@ -7,6 +7,10 @@ options {
 }
 
 tokens {
+  FILE;
+  FUNCTIONS;
+  SCRIPTS;
+
   FUNCTION;
   OUTARGS;
   INARGS;
@@ -28,7 +32,9 @@ tokens {
   SIZE;
 }
 
-file	    :	function+ EOF;
+file	    :	(function | body)+ EOF -> 
+              ^(FILE ^(FUNCTIONS function*) 
+                     ^(SCRIPTS ^(BODY body)*));
 
 function	:	'function' outArgs? ID inArgs? body  'end'?
             -> ^(FUNCTION ^(NAME ID) inArgs outArgs ^(BODY body) );
@@ -52,8 +58,9 @@ ctorArgs  : expr (',' expr)+ -> ^(CALLARGS expr+ )
 
 body      : stat+;
 
-stat      : outArgs expr -> ^(ASSIGN outArgs expr)
-          | expr;
+stat      : outArgs expr ';'? -> ^(ASSIGN outArgs expr)
+          | expr ';'? -> expr
+          ;
 
 expr      : mulExpr (('+'^|'-'^) mulExpr )*
           ;

@@ -1,5 +1,9 @@
 group Python;
 
+file( functions, scripts ) ::=<<
+<[functions, scripts]; separator="\n\n">
+>>
+
 function( name, inArgs, outArgs, body ) ::=<<
 def <name>(<inArgs>):
   <body>
@@ -91,7 +95,7 @@ vstack([<el; separator=", ">])
 >>
 
 solve( A, b ) ::=<<
-linalg.solve( <A>, <b>)
+linalg.lstsq( <A>, <b>)[0]
 >>
 
 size( a ) ::=<<

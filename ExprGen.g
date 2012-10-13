@@ -6,11 +6,20 @@ options {
   output = template;
 }
 
+file      : ^(FILE 
+              ^(FUNCTIONS f+=function*) 
+              ^(SCRIPTS s+=script*)) 
+            -> file( functions={$f}, scripts={$s})
+          ;
+
 function  : ^(FUNCTION ^(NAME id_expr) inArgs outArgs ^(BODY body)) 
               -> function( name={$id_expr.st}, 
                            inArgs = {$inArgs.st},
                            outArgs = {$outArgs.st}, 
                            body = {$body.st} )
+          ;
+
+script    : ^(BODY body) -> { $body.st }
           ;
 
 body      : s+=stat+ -> body( stat =  { $s } )
