@@ -49,8 +49,13 @@ mulExpr   : ^(RDIVIDE A=powExpr b=powExpr ) -> solve( A={$A.st}, b={$b.st})
           | powExpr -> { $powExpr.st }
           ;
 
-powExpr   : ^('.^' a=grpExpr b=grpExpr ) -> elpow( a={$a.st}, b={$b.st})
-          | ^('^' a=grpExpr b=grpExpr ) -> matpow( a={$a.st}, b={$b.st})
+powExpr   : ^('.^' a=transExpr b=transExpr ) -> elpow( a={$a.st}, b={$b.st})
+          | ^('^' a=transExpr b=transExpr ) -> matpow( a={$a.st}, b={$b.st})
+          | transExpr -> { $transExpr.st }
+          ;
+
+transExpr : ^(TRANS grpExpr) -> trans( x = { $grpExpr.st } ) 
+          | ^(CTRANS grpExpr) -> ctrans( x = { $grpExpr.st } ) 
           | grpExpr -> { $grpExpr.st }
           ;
 

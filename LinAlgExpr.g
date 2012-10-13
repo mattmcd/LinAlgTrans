@@ -24,6 +24,9 @@ tokens {
   CALLARGS;
   PARENS;
   UMINUS;
+  // Transpose operators
+  TRANS;  // .'
+  CTRANS; // '
   // Library functions
   SVD;
   EIG;
@@ -68,8 +71,12 @@ expr      : mulExpr (('+'^|'-'^) mulExpr )*
 mulExpr   : powExpr (('*'^|'/'^|'.*'^|'./'^|RDIVIDE^) powExpr)*
           ;
 
-powExpr   : groupExpr (('^'^|'.^'^) groupExpr)*
+powExpr   : transExpr (('^'^|'.^'^) transExpr)*
           ;
+
+transExpr : groupExpr (TRANS^ | CTRANS^)?
+          ;
+          
 
 groupExpr : base_expr^
           | '(' expr ')' -> ^(PARENS expr) 
@@ -111,6 +118,10 @@ exprList: expr (',' expr)* -> expr+;
 
 RDIVIDE : '\\';
 
+TRANS   : '.\'';
+
+CTRANS  : '\'';
+
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
@@ -138,10 +149,6 @@ WS  :   ( ' '
         | '\r'
         | '\n'
         ) {$channel=HIDDEN;}
-    ;
-
-STRING
-    :  '\'' ( ESC_SEQ | ~('\\'|'\'') )* '\''
     ;
 
 fragment

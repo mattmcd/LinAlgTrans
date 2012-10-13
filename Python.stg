@@ -62,6 +62,14 @@ matpow( a, b) ::=<<
 (mat(<a>)^mat(<b>))
 >>
 
+trans( x ) ::=<<
+<x>.T
+>>
+
+ctrans( x ) ::=<<
+<x>.conj().T
+>>
+
 call( name, args ) ::=<<
 <name><args>
 >>
