@@ -74,6 +74,7 @@ libCall   : ^(SVD callArgs ) -> svd( args = {$callArgs.st} )
           | ^(EIG callArgs ) -> eig( args = {$callArgs.st} ) 
           | ^(RAND callArgs ) -> rand( args = {$callArgs.st} ) 
           | ^(RANDN callArgs ) -> randn( args = {$callArgs.st} ) 
+          | ^(SIZE expr ) -> size( a = {$expr.st} ) 
           ;
 
 callArgs  : ^(CALLARGS e+=expr* ) -> callArgs( args = {$e} )

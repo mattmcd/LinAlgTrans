@@ -26,8 +26,8 @@ public class LinAlg {
     CommonTokenStream tokens = new CommonTokenStream(lex);
     // System.out.println("tokens="+tokens);
     LinAlgExprParser parser = new LinAlgExprParser(tokens);
-    LinAlgExprParser.function_return r = parser.function();
-    // LinAlgExprParser.body_return r = parser.body();
+    // LinAlgExprParser.function_return r = parser.function();
+    LinAlgExprParser.body_return r = parser.body();
 
     CommonTree t = (CommonTree) r.getTree();
     System.out.println( t.toStringTree() ); // Display parse tree    
@@ -40,8 +40,8 @@ public class LinAlg {
 
     ExprGen walker = new ExprGen( nodes );
     walker.setTemplateLib( templates );
-    ExprGen.function_return ret = walker.function();
-    // ExprGen.body_return ret = walker.body();
+    // ExprGen.function_return ret = walker.function();
+    ExprGen.body_return ret = walker.body();
     return ret.getTemplate().toString();
   }
 }

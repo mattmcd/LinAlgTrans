@@ -25,6 +25,7 @@ tokens {
   EIG;
   RAND;
   RANDN;
+  SIZE;
 }
 
 file	    :	function+ EOF;
@@ -33,7 +34,7 @@ function	:	'function' outArgs? ID inArgs? body  'end'?
             -> ^(FUNCTION ^(NAME ID) inArgs outArgs ^(BODY body) );
 	
 outArgs	  :	ID 	'=' -> ^(OUTARGS ID)
-	        |	'[' idList ']' '=' 	-> ^(OUTARGS idList)
+	        |	'[' idList ']' '=' -> ^(OUTARGS idList)
 	        ;
 	
 // Function definition argument list
@@ -51,7 +52,7 @@ ctorArgs  : expr (',' expr)+ -> ^(CALLARGS expr+ )
 
 body      : stat+;
 
-stat      : outArgs '=' expr -> ^(ASSIGN outArgs expr)
+stat      : outArgs expr -> ^(ASSIGN outArgs expr)
           | expr;
 
 expr      : mulExpr (('+'^|'-'^) mulExpr )*
@@ -89,6 +90,7 @@ libCall   : 'svd' callArgs -> ^(SVD callArgs)
           | 'rand' '(' ctorArgs ')' -> ^(RAND ctorArgs)
           | 'randn' '(' ctorArgs ')' -> ^(RANDN ctorArgs)
           | 'dot' '(' a=expr ',' b=expr ')' -> ^('*' $a $b)
+          | 'size' '(' expr ')' -> ^(SIZE expr)
           ;
 
 /*          

@@ -19,7 +19,7 @@ outArgs( args ) ::=<<
 >>
 
 matrix( el ) ::=<<
-mat( <el> )
+<el>
 >>
 
 uminus( x )::=<<
@@ -35,15 +35,15 @@ sub( a, b) ::=<<
 >>
 
 elmul( a, b) ::=<<
-mat(asarray(<a>) * asarray(<b>))
+(<a> * <b>)
 >>
 
 eldiv( a, b) ::=<<
-mat(asarray(<a>)/asarray(<b>))
+(<a>/<b>)
 >>
 
 matmul( a, b) ::=<<
-(mat(<a>) * mat(<b>))
+dot(<a>,<b>)
 >>
 
 matdiv( a, b) ::=<<
@@ -83,13 +83,17 @@ random.randn<args>
 >>
 
 horzcat( el ) ::=<<
-[<el; separator=", ">]
+hstack([<el; separator=", ">])
 >>
 
 vertcat( el ) ::=<<
-[<el; separator=", ">]
+vstack([<el; separator=", ">])
 >>
 
 solve( A, b ) ::=<<
 linalg.solve( <A>, <b>)
+>>
+
+size( a ) ::=<<
+shape( <a> )
 >>
