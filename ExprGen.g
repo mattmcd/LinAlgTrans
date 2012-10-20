@@ -30,7 +30,7 @@ stat      : ^(ASSIGN a=outArgs e=expr)
           | e=expr -> { $e.st }
           ;
 
-inArgs	  :	^(INARGS a+=ID* ) -> outArgs( args = {$a} )
+inArgs	  :	^(INARGS a+=ID* ) -> inArgs( args = {$a} )
           ;
 
 outArgs   : ^(OUTARGS a+=ID* ) -> outArgs( args = {$a} )

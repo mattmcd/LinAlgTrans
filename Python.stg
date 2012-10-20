@@ -18,6 +18,10 @@ assign( var, expr ) ::=<<
 <var> = <expr>;
 >>
 
+inArgs( args ) ::=<<
+<args; separator=", ">
+>>
+
 outArgs( args ) ::=<<
 <args; separator=", ">
 >>

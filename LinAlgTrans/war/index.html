@@ -27,17 +27,17 @@ complete MATLAB grammar.  </p>
   <form action="/Translate" method="post">
     <div>
         <textarea name="input" cols="75" rows="25">
-            function fitParams = fitLine( xData, yData )
-            designMat = [ xData, ones(size(xData)) ]
-            fitParams = designMat\yData
-            end
-
-            x = [0; 1; 2; 3]
-            y = [-1; 0.2; 0.9; 2.1]
-            fitLine( x, y )
+           function x=fooSolve( A, b)
+           x=A\b;
+           end
+           
+           A=rand(10);
+           b=rand(10,1);
+           x=fooSolve( A, b);
         </textarea>
     </div>
     <div><input type="radio" name="generate" value="" checked/>Python</div>
+    <div><input type="radio" name="generate" value="CommonsMath" />CommonsMath</div>
     <div><input type="submit" value="Translate"/></div>
   </form>
   <p>

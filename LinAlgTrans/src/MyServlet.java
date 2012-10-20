@@ -24,8 +24,8 @@ public class MyServlet extends HttpServlet {
 
       String filename;
       if ( outType != null ) {
-        if ( outType.equals( "javascript") ) {
-          filename = "/WEB-INF/MEXWrapper.stg";
+        if ( outType.equals( "CommonsMath") ) {
+          filename = "/WEB-INF/CommonsMath.stg";
         } else {
           filename = "/WEB-INF/Python.stg";
         }

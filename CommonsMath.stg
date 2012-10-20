@@ -1,0 +1,177 @@
+group CommonsMath;
+
+file( functions, scripts ) ::=<<
+import org.apache.commons.math3.linear.*;
+import org.apache.commons.math3.random.*;
+
+public class TestCommons {
+  public static final void main( String[] args ) {
+    System.out.println( "Solving A*x=b" );     
+    <scripts>
+    System.out.println( A );
+    System.out.println( b );
+    System.out.println( x );
+  }
+  
+  <functions>
+
+  static RealMatrix hCat( RealMatrix[] A) {
+    // Horizontal concatenation of matrices
+
+    int m = A.getRowDimension();
+    int n1 = A.getColumnDimension();
+    int n2 = A.getColumnDimension();
+
+    // Create the output array
+    RealMatrix out = new Array2DRowRealMatrix( m, n1 + n2);
+
+    out.setSubMatrix( A.getData(), 0, 0);
+    out.setSubMatrix( B.getData(), 0, n1);
+    return out;
+  }
+
+  static RealMatrix rand( int m, int n){
+    return randMat( m, n, randGen());
+  }
+  
+  static RealMatrix randn( int m, int n){
+    return randMat( m, n, randNormGen());
+  }
+
+  static NormalizedRandomGenerator randGen( ) {
+    // m by n uniform random matrix
+    MersenneTwister mt = new MersenneTwister();
+    NormalizedRandomGenerator gen = new UniformRandomGenerator( mt );
+    return gen;
+  }
+
+  static NormalizedRandomGenerator randNormGen( ) {
+    // m by n uniform random matrix
+    MersenneTwister mt = new MersenneTwister();
+    NormalizedRandomGenerator gen = new GaussianRandomGenerator( mt );
+    return gen;
+  }
+
+  static RealMatrix randMat( int m, int n, NormalizedRandomGenerator gen ) {
+    // Generate a random matrix column by column
+    RandomVectorGenerator vgen = new UncorrelatedRandomVectorGenerator( m, gen );
+
+    RealMatrix out = new Array2DRowRealMatrix( m, n );
+    for ( int i=0; i\<n; ++i ) {
+      out.setColumn( i, vgen.nextVector() );
+    }
+    return out;
+  }
+}
+>>
+
+function( name, inArgs, outArgs, body ) ::=<<
+static RealMatrix <name>(<inArgs>) {
+  <body>
+  return (<outArgs>);
+}
+>>
+
+body( stat ) ::=<<
+<stat; separator=";\n">
+>>
+
+assign( var, expr ) ::=<<
+RealMatrix <var> = <expr>;
+>>
+
+inArgs( args ) ::=<<
+<args:{RealMatrix <it>}; separator=", ">
+>>
+
+outArgs( args ) ::=<<
+<args; separator=", ">
+>>
+
+matrix( el ) ::=<<
+<el>
+>>
+
+uminus( x )::=<<
+-<x>
+>>
+
+add( a, b) ::=<<
+<a>.add(<b>)
+>>
+
+sub( a, b) ::=<<
+<a>.subtract(<b>)
+>>
+
+elmul( a, b) ::=<<
+(<a> * <b>)
+>>
+
+eldiv( a, b) ::=<<
+(<a>/<b>)
+>>
+
+matmul( a, b) ::=<<
+<a>.multiply(<b>)
+>>
+
+matdiv( a, b) ::=<<
+(<a>/<b>)
+>>
+
+elpow( a, b) ::=<<
+power(<a>, <b>)
+>>
+
+matpow( a, b) ::=<<
+<a>.power(<b>)
+>>
+
+trans( x ) ::=<<
+<x>.transpose()
+>>
+
+ctrans( x ) ::=<<
+<x>.transpose()
+>>
+
+call( name, args ) ::=<<
+<name><args>
+>>
+
+callArgs( args ) ::=<<
+(<args; separator=", ">)
+>>
+
+svd( args ) ::=<<
+linalg.svd<args>
+>>
+
+eig( args ) ::=<<
+linalg.eig<args>
+>>
+
+rand( args ) ::=<<
+rand<args>
+>>
+
+randn( args ) ::=<<
+randn<args>
+>>
+
+horzcat( el ) ::=<<
+hCat(RealMatrix[] {<el; separator=", ">})
+>>
+
+vertcat( el ) ::=<<
+vCat(RealMatrix[] {<el; separator=", ">})
+>>
+
+solve( A, b ) ::=<<
+new SingularValueDecomposition(<A>).getSolver().solve(<b>)
+>>
+
+size( a ) ::=<<
+shape( <a> )
+>>
