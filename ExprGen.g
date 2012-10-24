@@ -36,37 +36,24 @@ inArgs	  :	^(INARGS a+=ID* ) -> inArgs( args = {$a} )
 outArgs   : ^(OUTARGS a+=ID* ) -> outArgs( args = {$a} )
           ;
 
-expr      : ^('+' a=mulExpr b=mulExpr) -> add( a={$a.st}, b={$b.st} )
-          | ^('-' a=mulExpr b=mulExpr) -> sub( a={$a.st}, b={$b.st} )
-          | mulExpr -> { $mulExpr.st }
-          ;
-
-mulExpr   : ^(RDIVIDE A=powExpr b=powExpr ) -> solve( A={$A.st}, b={$b.st})
-          | ^('.*' a=powExpr b=powExpr ) -> elmul( a={$a.st}, b={$b.st})
-          | ^('./' a=powExpr b=powExpr ) -> eldiv( a={$a.st}, b={$b.st})
-          | ^('/' a=powExpr b=powExpr ) -> matdiv( a={$a.st}, b={$b.st})
-          | ^('*' a=powExpr b=powExpr ) -> matmul( a={$a.st}, b={$b.st})
-          | powExpr -> { $powExpr.st }
-          ;
-
-powExpr   : ^('.^' a=transExpr b=transExpr ) -> elpow( a={$a.st}, b={$b.st})
-          | ^('^' a=transExpr b=transExpr ) -> matpow( a={$a.st}, b={$b.st})
-          | transExpr -> { $transExpr.st }
-          ;
-
-transExpr : ^(TRANS grpExpr) -> trans( x = { $grpExpr.st } ) 
-          | ^(CTRANS grpExpr) -> ctrans( x = { $grpExpr.st } ) 
-          | grpExpr -> { $grpExpr.st }
-          ;
-
-grpExpr   : base_expr -> { $base_expr.st }
-          | ^(PARENS expr) -> { $expr.st }
-          ;
-
-base_expr : ^(MATRIX e=vmatrix ) -> matrix( el = { $e.st } )
+expr      : ^('+' a=expr b=expr) -> add( a={$a.st}, b={$b.st} )
+          | ^('-' a=expr b=expr) -> sub( a={$a.st}, b={$b.st} )
+          | ^(RDIVIDE A=expr b=expr ) -> solve( A={$A.st}, b={$b.st})
+          | ^('.*' a=expr b=expr ) -> elmul( a={$a.st}, b={$b.st})
+          | ^('./' a=expr b=expr ) -> eldiv( a={$a.st}, b={$b.st})
+          | ^('/' a=expr b=expr ) -> matdiv( a={$a.st}, b={$b.st})
+          | ^('*' a=expr b=expr ) -> matmul( a={$a.st}, b={$b.st})
+          | ^('.^' a=expr b=expr ) -> elpow( a={$a.st}, b={$b.st})
+          | ^('^' a=expr b=expr ) -> matpow( a={$a.st}, b={$b.st})
+          | ^(TRANS e=expr) -> trans( x = { $e.st } ) 
+          | ^(CTRANS e=expr) -> ctrans( x = { $e.st } ) 
+          | ^(PARENS e=expr) -> { $e.st }
+          | ^(MATRIX e=expr ) -> matrix( el = { $e.st } )
           | funCall -> { $funCall.st }
-          |^(UMINUS id_expr) -> uminus( x = { $id_expr.st } )
+          | ^(UMINUS id_expr) -> uminus( x = { $id_expr.st } )
           | id_expr -> { $id_expr.st }
+          | vmatrix -> { $vmatrix.st }
+          | hmatrix -> { $hmatrix.st }
           ;
 
 id_expr   : ID -> { %{$ID.text} }
