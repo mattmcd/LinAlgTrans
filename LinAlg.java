@@ -21,7 +21,7 @@ public class LinAlg {
     return generate( input, "Python.stg");
   }
 
-  public static CommonTreeNodeStream parse( CharStream input ) {
+  public static CommonTreeNodeStream parse( CharStream input ) throws Exception {
     LinAlgExprLexer lex = new LinAlgExprLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(lex);
     // System.out.println("tokens="+tokens);
@@ -39,7 +39,7 @@ public class LinAlg {
   }
 
   public static String generate( CharStream input, String templateFile ) throws Exception {
-    nodes = parse( input );
+    CommonTreeNodeStream nodes = parse( input );
 
     FileReader groupFileR = new FileReader( templateFile );
     StringTemplateGroup templates = new StringTemplateGroup( groupFileR );
